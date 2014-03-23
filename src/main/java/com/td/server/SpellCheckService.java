@@ -84,7 +84,7 @@ public class SpellCheckService extends HttpServlet {
                 response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
                 response.getWriter().println("id not type long");
             }
-            if (spellCheckMap.contains(id)) {
+            if (spellCheckMap.containsKey(id)) {
                 BKTree bkTree = spellCheckMap.get(id);
                 for (String s : params.get("words")[0].split(",")) {
                     bkTree.add(s.trim());
