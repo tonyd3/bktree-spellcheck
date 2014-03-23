@@ -1,0 +1,20 @@
+<web-app id="App"
+         xmlns="http://java.sun.com/xml/ns/javaee"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
+         metadata-complete="false"
+         version="3.0">
+    <display-name>SpellCheck Service</display-name>
+
+    <servlet>
+        <servlet-name>spellcheck-serlvet</servlet-name>
+        <servlet-class>com.td.server.SpellCheckService</servlet-class>
+        <load-on-startup>1</load-on-startup>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>spellcheck-serlvet</servlet-name>
+        <url-pattern>/*</url-pattern>
+    </servlet-mapping>
+
+</web-app>

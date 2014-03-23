@@ -6,3 +6,4 @@
 *.ear
 .idea/*
 BKTree-SpellCheck.iml
+target/*
