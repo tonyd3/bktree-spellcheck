@@ -4,6 +4,8 @@ bktree-spellcheck
 A spell speck service that is implemented using a BK-Tree.
 This service can also be used for auto completion.
 
+checkout http://blog.notdot.net/2007/4/Damn-Cool-Algorithms-Part-1-BK-Trees
+
 ### Starting the Service Using Maven
 ```bash
 mvn install
