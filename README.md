@@ -26,3 +26,4 @@ curl --data "words=kiwi,cantaloupe,strawberry&id=1395598771557"  http://localhos
 ```bash
 curl "http://localhost:9999/spellcheck-service?id=1395598771557&word=cantelope&edit_distance=2"
 ```
+Example Response: {"results":[["cantaloupe"]]}
