@@ -79,14 +79,16 @@ public class SpellCheckService extends HttpServlet {
         if (params.containsKey("id")) {
             long id = 0;
             try {
-                id = Long.getLong(params.get("id")[0]);
+                id = Long.parseLong(params.get("id")[0]);
             } catch (Exception e) {
                 response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
                 response.getWriter().println("id not type long");
             }
             if (spellCheckMap.contains(id)) {
                 BKTree bkTree = spellCheckMap.get(id);
-                bkTree.add(Arrays.asList(params.get("words")));
+                for (String s : params.get("words")[0].split(",")) {
+                    bkTree.add(s.trim());
+                }
                 response.getWriter().println("new words added");
             } else {
                 response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
@@ -95,7 +97,9 @@ public class SpellCheckService extends HttpServlet {
         } else {
             long id = new Date().getTime();
             BKTree bkTree = new BKTree();
-            bkTree.add(Arrays.asList(params.get("words")[0].split(",")));
+            for (String s : params.get("words")[0].split(",")) {
+                bkTree.add(s.trim());
+            }
             JSONObject object = new JSONObject();
             try {
                 object.put("id", id);
