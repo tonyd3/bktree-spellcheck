@@ -43,7 +43,7 @@ public class SpellCheckService extends HttpServlet {
         int editDistance = 1;
         if (params.containsKey("edit_distance")) {
             try {
-                int value = Integer.getInteger(params.get("edit_distance")[0]);
+                int value = Integer.parseInt(params.get("edit_distance")[0]);
                 editDistance = value > 0 ? value : 1;
             } catch (Exception e) {
 
