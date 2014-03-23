@@ -32,40 +32,36 @@ public class SpellCheckService extends HttpServlet {
             return;
         }
 
-        if (spellCheckMap.containsKey(params.get("id")[0])) {
-            long id = 0;
+
+        long id = 0;
+        try {
+            id = Long.parseLong(params.get("id")[0]);
+        } catch (Exception e) {
+            response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+            response.getWriter().println("id not type long");
+        }
+        int editDistance = 1;
+        if (params.containsKey("edit_distance")) {
             try {
-                id = Long.getLong(params.get("id")[0]);
+                int value = Integer.getInteger(params.get("edit_distance")[0]);
+                editDistance = value > 0 ? value : 1;
             } catch (Exception e) {
-                response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-                response.getWriter().println("id not type long");
-            }
-            int editDistance = 1;
-            if (params.containsKey("edit_distance")) {
-                try {
-                    int value = Integer.getInteger(params.get("edit_distance")[0]);
-                    editDistance = value > 0 ? value : 1;
-                } catch (Exception e) {
 
-                }
             }
-            if (spellCheckMap.contains(id)) {
-                List<String> results = spellCheckMap.get(id).search(params.get("word")[0], editDistance);
-                try {
-                    response.getWriter().println(new Response(results).toString());
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                    response.getWriter().println("Something is wrong with the service right now...");
-                }
-            } else {
-                response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-                response.getWriter().println("id not found");
+        }
+        if (spellCheckMap.containsKey(id)) {
+            List<String> results = spellCheckMap.get(id).search(params.get("word")[0], editDistance);
+            try {
+                response.getWriter().println(new Response(results).toString());
+            } catch (JSONException e) {
+                e.printStackTrace();
+                response.getWriter().println("Something is wrong with the service right now...");
             }
-
         } else {
             response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
             response.getWriter().println("id not found");
         }
+
     }
 
     @Override
@@ -99,11 +95,12 @@ public class SpellCheckService extends HttpServlet {
         } else {
             long id = new Date().getTime();
             BKTree bkTree = new BKTree();
-            bkTree.add(Arrays.asList(params.get("words")));
+            bkTree.add(Arrays.asList(params.get("words")[0].split(",")));
             JSONObject object = new JSONObject();
             try {
                 object.put("id", id);
                 response.getWriter().println(object.toString());
+                spellCheckMap.put(id, bkTree);
             } catch (JSONException e) {
                 e.printStackTrace();
                 response.getWriter().println("Something is wrong with the service right now...");
