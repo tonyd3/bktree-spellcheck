@@ -31,4 +31,17 @@ public class BKTreeTest extends TestCase {
         assertEquals(1, results.size());
         assertEquals("test", results.get(0));
     }
+
+    public void testGivenExample() {
+        BKTree tree = new BKTree();
+        tree.add("apple");
+        tree.add("orange");
+        tree.add("pear");
+        tree.add("kiwi");
+        tree.add("cantaloupe");
+        tree.add("strawberry");
+        List<String> results = tree.search("cantelope", 2);
+        assertEquals(1, results.size());
+        assertEquals("cantaloupe", results.get(0));
+    }
 }
